@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Régression Linéaire - IA & Machine Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkPrimary: '#1A1A2E',
+                        darkSecondary: '#16213E',
+                        darkAccent: '#0F3460',
+                        purpleAccent: '#6A4C93',
+                        tealAccent: '#00B4D8',
+                        pinkAccent: '#E94560',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkPrimary text-gray-200 font-sans leading-relaxed">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold mb-4 text-tealAccent">Régression Linéaire</h1>
+            <p class="text-xl text-purpleAccent">Fondamentaux du Machine Learning Supervisé</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <section class="mb-12 bg-darkSecondary rounded-xl p-6 shadow-lg border-l-4 border-pinkAccent">
+            <h2 class="text-2xl font-semibold mb-4 text-tealAccent">1. Contexte : IA, Machine Learning et Apprentissage Supervisé</h2>
+            <div class="space-y-4">
+                <p>Pour bien comprendre la régression linéaire, il faut la situer.</p>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-purpleAccent">Intelligence Artificielle (IA) :</h3>
+                    <p>Le domaine global. L'objectif est de créer des machines qui simulent des capacités cognitives humaines (résolution de problèmes, apprentissage, etc.).</p>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-purpleAccent">Machine Learning (ML) :</h3>
+                    <p>Une sous-catégorie de l'IA. Il s'agit de donner aux machines la capacité d'apprendre à partir de données sans être explicitement programmées pour chaque tâche.</p>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-purpleAccent">Apprentissage Supervisé :</h3>
+                    <p>Une sous-catégorie du ML. L'algorithme apprend à partir d'un ensemble de données "étiquetées", c'est-à-dire où chaque entrée a une sortie correspondante. La machine apprend à prédire la sortie pour de nouvelles entrées. C'est ici que se trouve la régression linéaire.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Linear Regression -->
+        <section class="mb-12 bg-darkSecondary rounded-xl p-6 shadow-lg border-l-4 border-tealAccent">
+            <h2 class="text-2xl font-semibold mb-4 text-tealAccent">2. Qu'est-ce que la Régression Linéaire ?</h2>
+            <div class="space-y-4">
+                <p>La régression linéaire est un des algorithmes d'apprentissage supervisé les plus simples et les plus fondamentaux. Son objectif est de modéliser la relation entre une variable indépendante (ou plusieurs) et une variable dépendante en ajustant une ligne droite (ou un hyperplan dans le cas multidimensionnel) à ces données.</p>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-darkAccent p-4 rounded-lg">
+                        <h3 class="font-bold text-pinkAccent">Variable indépendante (x) :</h3>
+                        <p>La(les) variable(s) que nous utilisons pour faire la prédiction. On l'appelle aussi "caractéristique" ou "feature".</p>
+                    </div>
+                    
+                    <div class="bg-darkAccent p-4 rounded-lg">
+                        <h3 class="font-bold text-pinkAccent">Variable dépendante (y) :</h3>
+                        <p>La variable que nous essayons de prédire. On l'appelle aussi "cible" ou "target".</p>
+                    </div>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-purpleAccent mb-2">Formule Mathématique de Base</h3>
+                    <p>La forme la plus simple est la régression linéaire simple (une seule variable indépendante) :</p>
+                    <div class="text-center my-4">
+                        <span class="text-2xl font-mono bg-gray-800 px-4 py-2 rounded">y = ax + b</span>
+                    </div>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><span class="font-semibold">y</span> : La valeur prédite.</li>
+                        <li><span class="font-semibold">x</span> : La valeur de la variable indépendante.</li>
+                        <li><span class="font-semibold">a</span> : Le "coefficient" ou la "pente" de la ligne. Il représente le changement de y pour chaque unité de changement dans x.</li>
+                        <li><span class="font-semibold">b</span> : L'"ordonnée à l'origine" ou "biais". C'est la valeur de y lorsque x est égal à 0.</li>
+                    </ul>
+                    <p class="mt-3">L'objectif de l'algorithme est de trouver les meilleures valeurs pour a et b pour que la ligne soit la plus proche possible de tous les points de données.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works -->
+        <section class="mb-12 bg-darkSecondary rounded-xl p-6 shadow-lg border-l-4 border-purpleAccent">
+            <h2 class="text-2xl font-semibold mb-4 text-tealAccent">3. Comment ça Marche ? - Le Cœur de l'Apprentissage</h2>
+            <div class="space-y-6">
+                <p>L'apprentissage de la régression linéaire consiste à minimiser l'erreur entre les valeurs prédites par notre modèle (y_prédit) et les valeurs réelles (y_réel).</p>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-pinkAccent mb-2">Fonction de Coût (Cost Function)</h3>
+                    <p>Pour mesurer cette erreur, on utilise une fonction de coût. La plus courante pour la régression linéaire est l'Erreur Quadratique Moyenne (Mean Squared Error - MSE).</p>
+                    <div class="text-center my-4">
+                        <span class="text-xl font-mono bg-gray-800 px-4 py-2 rounded">MSE = (1/n) * Σ(y_i - ŷ_i)²</span>
+                    </div>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><span class="font-semibold">n</span> : Le nombre de points de données.</li>
+                        <li><span class="font-semibold">y_i</span> : La valeur réelle du ième point.</li>
+                        <li><span class="font-semibold">ŷ_i</span> : La valeur prédite par le modèle pour le ième point.</li>
+                    </ul>
+                    <p class="mt-3">L'objectif de l'algorithme est de trouver les paramètres (a et b) qui minimisent ce MSE.</p>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-pinkAccent mb-2">Méthode pour minimiser le coût</h3>
+                    <p>Deux méthodes principales :</p>
+                    
+                    <div class="mt-4">
+                        <h4 class="font-semibold text-tealAccent">Méthode des moindres carrés ordinaires (OLS - Ordinary Least Squares) :</h4>
+                        <p>Une méthode analytique qui permet de trouver directement les valeurs optimales de a et b en résolvant une équation. C'est très efficace pour les petits jeux de données.</p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4 class="font-semibold text-tealAccent">Descente de gradient (Gradient Descent) :</h4>
+                        <p>Une méthode itérative. On part de valeurs aléatoires pour a et b et on les ajuste petit à petit dans la direction qui réduit le plus la fonction de coût, jusqu'à atteindre un minimum local (ou global). C'est la méthode de choix pour les grands jeux de données.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples -->
+        <section class="mb-12 bg-darkSecondary rounded-xl p-6 shadow-lg border-l-4 border-pinkAccent">
+            <h2 class="text-2xl font-semibold mb-4 text-tealAccent">4. Exemples Concrets pour un Développeur</h2>
+            <p class="mb-4">Voici des scénarios où vous pourriez utiliser la régression linéaire.</p>
+            
+            <div class="space-y-8">
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-purpleAccent mb-3">Exemple 1 : Prédiction du prix d'une maison</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-4">
+                        <li><span class="font-semibold">Problème :</span> Prédire le prix de vente d'une maison en fonction de sa surface.</li>
+                        <li><span class="font-semibold">Variables :</span>
+                            <ul class="list-circle pl-5 mt-1">
+                                <li>x (indépendante) : Surface de la maison en m².</li>
+                                <li>y (dépendante) : Prix de la maison en euros.</li>
+                            </ul>
+                        </li>
+                        <li><span class="font-semibold">Modèle :</span> prix = a * surface + b</li>
+                    </ul>
+                    
+                    <div class="bg-gray-800 p-4 rounded-lg overflow-x-auto">
+                        <pre class="text-sm font-mono text-tealAccent">
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Données d'exemple : (surface, prix)
+X = np.array([50, 75, 100, 120, 150]).reshape(-1, 1) # Surface en m²
+y = np.array([150000, 220000, 290000, 350000, 450000]) # Prix en €
+
+# Création et entraînement du modèle
+model = LinearRegression()
+model.fit(X, y)
+
+# Afficher les coefficients (a et b)
+print(f"Coefficient (a) : {model.coef_[0]:.2f}")
+print(f"Ordonnée à l'origine (b) : {model.intercept_:.2f}")
+
+# Utilisation du modèle pour une prédiction
+surface_nouvelle = 110 # Une maison de 110m²
+prix_predit = model.predict([[surface_nouvelle]])
+print(f"Prix prédit pour une maison de {surface_nouvelle}m² : {prix_predit[0]:.2f} €")</pre>
+                    </div>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-purpleAccent mb-3">Exemple 2 : Régression Linéaire Multiple</h3>
+                    <p>La régression linéaire peut gérer plusieurs variables indépendantes. La formule devient :</p>
+                    <div class="text-center my-4">
+                        <span class="text-xl font-mono bg-gray-800 px-4 py-2 rounded">y = a₁x₁ + a₂x₂ + ... + aₙxₙ + b</span>
+                    </div>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><span class="font-semibold">Problème :</span> Prédire les ventes d'un produit en fonction du budget publicitaire sur la télévision et la radio.</li>
+                        <li><span class="font-semibold">Variables :</span>
+                            <ul class="list-circle pl-5 mt-1">
+                                <li>x₁ : Budget TV</li>
+                                <li>x₂ : Budget Radio</li>
+                                <li>y : Ventes</li>
+                            </ul>
+                        </li>
+                        <li><span class="font-semibold">Modèle :</span> ventes = a₁ * budget_tv + a₂ * budget_radio + b</li>
+                    </ul>
+                    <p class="mt-3">L'interprétation devient : a₁ représente l'impact des dépenses TV sur les ventes (en maintenant la radio constante), et a₂ l'impact des dépenses radio (en maintenant la TV constante).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Watch -->
+        <section class="bg-darkSecondary rounded-xl p-6 shadow-lg border-l-4 border-tealAccent">
+            <h2 class="text-2xl font-semibold mb-4 text-tealAccent">5. Veille Technologique pour un Développeur</h2>
+            <p class="mb-4">Votre rôle ne se limite pas à écrire le code. Voici ce qu'un développeur doit savoir en plus :</p>
+            
+            <div class="space-y-6">
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-pinkAccent mb-2">Limites de la Régression Linéaire :</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><span class="font-semibold">Hypothèse de Linéarité :</span> Elle suppose que la relation entre les variables est linéaire. Si ce n'est pas le cas, le modèle sera mauvais.</li>
+                        <li><span class="font-semibold">Sensibilité aux Outliers :</span> Les valeurs extrêmes (outliers) peuvent fortement biaiser la ligne de régression.</li>
+                        <li><span class="font-semibold">Pas pour les données de classification :</span> C'est un modèle de régression (prédiction d'une valeur continue), pas de classification (prédiction d'une catégorie).</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-pinkAccent mb-2">Quand l'utiliser ?</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Comme un premier modèle "baseline" simple et rapide à implémenter.</li>
+                        <li>Pour des problèmes où on pense qu'il y a une relation linéaire (ex: taille vs poids, prix vs surface).</li>
+                        <li>Pour l'interprétabilité : les coefficients a et b sont faciles à comprendre.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-pinkAccent mb-2">Alternatives et évolutions :</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><span class="font-semibold">Régression polynomiale :</span> Pour modéliser des relations non linéaires en transformant les données d'entrée.</li>
+                        <li><span class="font-semibold">Régression logistique :</span> Pour les problèmes de classification. C'est l'étape suivante logique après la régression linéaire.</li>
+                        <li><span class="font-semibold">Régression Ridge et Lasso :</span> Des versions améliorées de la régression linéaire qui aident à gérer la sur-apprentissage (overfitting) et la multicolinéarité.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-darkAccent p-4 rounded-lg">
+                    <h3 class="font-bold text-pinkAccent mb-2">Outils et Librairies à connaître (en tant que dev) :</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mt-3">
+                        <div>
+                            <h4 class="font-semibold text-tealAccent">Python : La star du ML.</h4>
+                            <ul class="list-circle pl-5 space-y-1 mt-1">
+                                <li><span class="font-semibold">scikit-learn :</span> La bibliothèque incontournable.</li>
+                                <li><span class="font-semibold">pandas :</span> Pour la manipulation de données.</li>
+                                <li><span class="font-semibold">matplotlib/seaborn :</span> Pour la visualisation.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-tealAccent">Autres langages :</h4>
+                            <ul class="list-circle pl-5 space-y-1 mt-1">
+                                <li><span class="font-semibold">R :</span> Excellent pour les statistiques.</li>
+                                <li><span class="font-semibold">Julia :</span> Montée en puissance pour le calcul scientifique.</li>
+                                <li><span class="font-semibold">C++/Java :</span> Pour les implémentations en production.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="mt-12 bg-gradient-to-r from-purpleAccent to-pinkAccent rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-white">Conclusion</h2>
+            <p class="text-white">La régression linéaire est la porte d'entrée de l'apprentissage supervisé. Pour un développeur, la maîtriser ne signifie pas seulement connaître sa formule, mais comprendre ses hypothèses, ses forces, ses faiblesses, et savoir l'implémenter avec les outils adéquats. Elle sert de fondation solide pour aborder des modèles plus complexes et plus puissants.</p>
+        </section>
+    </div>
+</body>
+</html>
